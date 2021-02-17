@@ -1,7 +1,9 @@
 const express = require('express')
 
 console.log("Starting");
-console.log(process.env.CONFIG);
+
+const hostname = process.env.OCMS_HOSTNAME || "localhost";
+const port = process.env.OCMS_PORT || 8080;
 
 const server = express()
 server.get('/', function (request, response) {
@@ -20,4 +22,4 @@ server.get('/test', function (request, response) {
     response.send('{}');
 })
 
-server.listen(8080);
+server.listen(port, hostname);
