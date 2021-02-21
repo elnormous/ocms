@@ -1,9 +1,9 @@
 const express = require('express')
 
-console.log("Starting");
-
 const hostname = process.env.OCMS_HOSTNAME || "localhost";
 const port = process.env.OCMS_PORT || 8080;
+
+console.log("Running server on", hostname, "port", port);
 
 const server = express()
 server.get('/', function (request, response) {
