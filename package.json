@@ -5,8 +5,9 @@
   "main": "src/api/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon",
-    "build": "webpack --mode development"
+    "start": "nodemon",
+    "build:dev": "webpack --mode development",
+    "build:prod": "webpack --mode production"
   },
   "repository": {
     "type": "git",
