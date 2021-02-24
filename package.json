@@ -5,6 +5,7 @@
   "main": "src/api/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "npm run build:dev",
     "start": "nodemon",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production"
@@ -14,7 +15,7 @@
     "url": "git+https://github.com/elnormous/ocms.git"
   },
   "author": "Elviss Strazdins",
-  "license": "ISC",
+  "license": "Unlicense",
   "bugs": {
     "url": "https://github.com/elnormous/ocms/issues"
   },
