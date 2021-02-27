@@ -15,8 +15,22 @@ module.exports = class Database {
         this.client.connect();
     }
 
-    getRow(table) {
-        this.client.query("SELECT * FROM " + table, (err, res) => {
+    getRow(tableName, table, id) {
+        let query = "SELECT ";
+        const fields = table["fields"];
+        let fieldCount = 0;
+        for (const field in fields)
+        {
+            if (fieldCount++ != 0) query += ",";
+            query += field;
+        }
+
+        const primaryKey = table["primaryKey"];
+        const primaryKeyField = fields[primaryKey];
+
+        query += " FROM " + tableName + " WHERE " + table["primaryKey"] + "=" + (primaryKeyField["type"] === "number" ? id : "'" + id + "'");
+
+        this.client.query(query, (err, res) => {
             console.log(err, res)
         });
     }
@@ -29,7 +43,15 @@ module.exports = class Database {
 
     }
 
-    deleteRow(table) {
+    deleteRow(tableName, table, id) {
+        const fields = table["fields"];
+        const primaryKey = table["primaryKey"];
+        const primaryKeyField = fields[primaryKey];
 
+        query += "DELETE FROM " + tableName + " WHERE " + table["primaryKey"] + "=" + (primaryKeyField["type"] === "number" ? id : "'" + id + "'");
+
+        this.client.query(query, (err, res) => {
+            console.log(err, res)
+        });
     }
 }

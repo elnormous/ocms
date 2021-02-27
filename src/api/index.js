@@ -33,7 +33,7 @@ const database = new Database(
 
 const server = express()
 
-server.get("/config", function (request, response) {
+server.get("/api/config", function (request, response) {
     console.log(request.query);
 
     response.status(200);
@@ -43,22 +43,21 @@ server.get("/config", function (request, response) {
 
 if (config["tables"] !== undefined) {
     const tables = config["tables"];
-    console.log(tables);
 
     for (const tableName in tables) {
         const table = tables[tableName];
-        
-        server.get("/tables/" + tableName, function (request, response) {
+
+        server.get("/api/tables/" + tableName, function (request, response) {
             response.status(200);
             response.json({"name": tableName});
         });
 
         // TODO: post
 
-        server.get("/tables/" + tableName + "/:id", function (request, response) {
-            database.getRow(tableName);
-
+        server.get("/api/tables/" + tableName + "/:id", function (request, response) {
             let {id} = request.params;
+            database.getRow(tableName, table, id);
+
             response.status(200);
             response.json({"id": id});
         });
