@@ -1,4 +1,4 @@
-const { Client } = require('pg')
+const { Client } = require("pg")
 
 module.exports = class Database {
     client = null;
@@ -13,5 +13,23 @@ module.exports = class Database {
         });
 
         this.client.connect();
+    }
+
+    getRow(table) {
+        this.client.query("SELECT * FROM " + table, (err, res) => {
+            console.log(err, res)
+        });
+    }
+
+    insertRow(table) {
+
+    }
+
+    updateRow(table) {
+
+    }
+
+    deleteRow(table) {
+
     }
 }

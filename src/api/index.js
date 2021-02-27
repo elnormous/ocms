@@ -1,6 +1,6 @@
 const express = require("express")
 const path = require("path")
-const fs = require('fs');
+const fs = require("fs");
 const Database = require("./Database.js")
 
 const hostname = process.env.OCMS_HOSTNAME || "localhost";
@@ -45,17 +45,19 @@ if (config["tables"] !== undefined) {
     const tables = config["tables"];
     console.log(tables);
 
-    for (const i in tables) {
-        const table = tables[i];
+    for (const tableName in tables) {
+        const table = tables[tableName];
         
-        server.get("/tables/" + i, function (request, response) {
+        server.get("/tables/" + tableName, function (request, response) {
             response.status(200);
-            response.json({"name": i});
+            response.json({"name": tableName});
         });
 
         // TODO: post
 
-        server.get("/tables/" + i + "/:id", function (request, response) {
+        server.get("/tables/" + tableName + "/:id", function (request, response) {
+            database.getRow(tableName);
+
             let {id} = request.params;
             response.status(200);
             response.json({"id": id});
