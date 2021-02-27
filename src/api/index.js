@@ -47,19 +47,35 @@ if (config["tables"] !== undefined) {
     for (const tableName in tables) {
         const table = tables[tableName];
 
-        server.get("/api/tables/" + tableName, function (request, response) {
+        server.get("/api/tables/" + tableName, async function (request, response) {
             response.status(200);
             response.json({"name": tableName});
         });
 
         // TODO: post
 
-        server.get("/api/tables/" + tableName + "/:id", function (request, response) {
+        server.get("/api/tables/" + tableName + "/:id", async function (request, response) {
             let {id} = request.params;
-            database.getRow(tableName, table, id);
+            try
+            {
+                const result = await database.getRow(tableName, table, id);
 
-            response.status(200);
-            response.json({"id": id});
+                if (result["rows"].length > 0) {
+                    const rows = result["rows"];
+
+                    response.status(200);
+                    response.json(rows[0]);
+                }
+                else {
+                    response.status(404);
+                    response.send();
+                }
+            }
+            catch (e) {
+                console.error(e);
+                response.status(500);
+                response.send();
+            }
         });
 
         // TODO: put, delete

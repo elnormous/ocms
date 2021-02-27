@@ -30,16 +30,18 @@ module.exports = class Database {
 
         query += " FROM " + tableName + " WHERE " + table["primaryKey"] + "=" + (primaryKeyField["type"] === "number" ? id : "'" + id + "'");
 
-        this.client.query(query, (err, res) => {
-            console.log(err, res)
-        });
+        const resultPromise = new Promise((resolve, reject) => {
+
+        })
+
+        return this.client.query(query);
     }
 
-    insertRow(table) {
+    insertRow(tableName, table, values) {
 
     }
 
-    updateRow(table) {
+    updateRow(tableName, table, id, values) {
 
     }
 
@@ -50,8 +52,6 @@ module.exports = class Database {
 
         query += "DELETE FROM " + tableName + " WHERE " + table["primaryKey"] + "=" + (primaryKeyField["type"] === "number" ? id : "'" + id + "'");
 
-        this.client.query(query, (err, res) => {
-            console.log(err, res)
-        });
+        return this.client.query(query);
     }
 }
