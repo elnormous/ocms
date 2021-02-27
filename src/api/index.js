@@ -41,6 +41,30 @@ server.get("/config", function (request, response) {
     response.json(config);
 });
 
+if (config["tables"] !== undefined) {
+    const tables = config["tables"];
+    console.log(tables);
+
+    for (const i in tables) {
+        const table = tables[i];
+        
+        server.get("/tables/" + i, function (request, response) {
+            response.status(200);
+            response.json({"name": i});
+        });
+
+        // TODO: post
+
+        server.get("/tables/" + i + "/:id", function (request, response) {
+            let {id} = request.params;
+            response.status(200);
+            response.json({"id": id});
+        });
+
+        // TODO: put, delete
+    }
+}
+
 server.use(express.static(path.join("dist")))
 server.use("*", express.static(path.join("dist", "index.html")))
 
