@@ -10,12 +10,17 @@ const databaseName = process.env.OCMS_DATABASE_NAME || "ocms";
 const databaseUsername = process.env.OCMS_DATABASE_USERNAME || "";
 const databasePassword = process.env.OCMS_DATABASE_PASSWORD || "";
 
-const server = new Server(
-    databaseDriver,
-    databaseHostname,
-    databasePort,
-    databaseName,
-    databaseUsername,
-    databasePassword
-);
-server.run(hostname, port);
+try {
+    const server = new Server(
+        databaseDriver,
+        databaseHostname,
+        databasePort,
+        databaseName,
+        databaseUsername,
+        databasePassword
+    );
+    server.run(hostname, port);
+}
+catch (e) {
+    console.error(e.name + ":", e.message);
+}

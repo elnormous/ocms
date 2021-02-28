@@ -20,8 +20,8 @@ module.exports = class Server {
             let configData = fs.readFileSync('./config.json');
             this.config = JSON.parse(configData);
         }
-        catch (err) {
-            console.error('Failed to load config, error:', err)
+        catch (e) {
+            throw new Error("Failed to load config, " + e.message);
         }
 
         switch (databaseDriver) {
@@ -77,7 +77,7 @@ module.exports = class Server {
             response.json(rows);
         }
         catch (e) {
-            console.error(e);
+            console.error(e.name + ":", e.message);
             response.status(500);
             response.send();
         }
@@ -106,7 +106,7 @@ module.exports = class Server {
             }
         }
         catch (e) {
-            console.error(e);
+            console.error(e.name + ":", e.message);
             response.status(500);
             response.send();
         }
