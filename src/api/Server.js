@@ -47,7 +47,7 @@ module.exports = class Server {
             for (const tableName in tables) {
                 const table = tables[tableName];
 
-                this.server.get("/api/tables/" + tableName, this.handleGetTableRows.bind(this, tableName, table));
+                this.server.get("/api/tables/" + tableName, this.handleGetTableIds.bind(this, tableName, table));
                 this.server.post("/api/tables/" + tableName, this.handlePostTableRow.bind(this, tableName, table));
                 this.server.get("/api/tables/" + tableName + "/:id", this.handleGetTableRow.bind(this, tableName, table));
                 this.server.put("/api/tables/" + tableName + "/:id", this.handlePutTableRow.bind(this, tableName, table));
@@ -67,9 +67,9 @@ module.exports = class Server {
         response.json(this.config);
     }
 
-    async handleGetTableRows(tableName, table, request, response) {
+    async handleGetTableIds(tableName, table, request, response) {
         try {
-            const ids = await this.database.getRows(tableName, table);
+            const ids = await this.database.getIds(tableName, table);
 
             response.status(200);
             response.json(ids);

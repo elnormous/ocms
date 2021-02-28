@@ -18,7 +18,7 @@ module.exports = class Postgres extends Database {
         this.client.connect();
     }
 
-    async getRows(tableName, table) {
+    async getIds(tableName, table) {
         let query = "SELECT " + table["primaryKey"] + " FROM " + tableName;
         const result = await this.client.query(query);
 
