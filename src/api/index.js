@@ -48,16 +48,26 @@ if (config["tables"] !== undefined) {
         const table = tables[tableName];
 
         server.get("/api/tables/" + tableName, async function (request, response) {
-            response.status(200);
-            response.json({"name": tableName});
+
+            try {
+                const result = await database.getRows(tableName, table);
+                const rows = result["rows"];
+
+                response.status(200);
+                response.json(rows);
+            }
+            catch (e) {
+                console.error(e);
+                response.status(500);
+                response.send();
+            }
         });
 
         // TODO: post
 
         server.get("/api/tables/" + tableName + "/:id", async function (request, response) {
             let {id} = request.params;
-            try
-            {
+            try {
                 const result = await database.getRow(tableName, table, id);
 
                 if (result["rows"].length > 0) {
