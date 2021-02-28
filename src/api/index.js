@@ -48,7 +48,6 @@ if (config["tables"] !== undefined) {
         const table = tables[tableName];
 
         server.get("/api/tables/" + tableName, async function (request, response) {
-
             try {
                 const result = await database.getRows(tableName, table);
                 const rows = result["rows"];
@@ -63,7 +62,11 @@ if (config["tables"] !== undefined) {
             }
         });
 
-        // TODO: post
+        server.get("/api/tables/" + tableName, async function (request, response) {
+            response.status(501);
+            response.send("id");
+            // TODO: insert a row into database and return the inserted id
+        });
 
         server.get("/api/tables/" + tableName + "/:id", async function (request, response) {
             let {id} = request.params;
@@ -88,7 +91,23 @@ if (config["tables"] !== undefined) {
             }
         });
 
-        // TODO: put, delete
+        server.put("/api/tables/" + tableName + "/:id", async function (request, response) {
+            let {id} = request.params;
+
+            response.status(501);
+            response.send();
+
+            // TODO: update the row in database
+        });
+
+        server.delete("/api/tables/" + tableName + "/:id", async function (request, response) {
+            let {id} = request.params;
+
+            response.status(501);
+            response.send();
+
+            // TODO: delete the row from database
+        });
     }
 }
 
