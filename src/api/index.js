@@ -20,7 +20,6 @@ try {
         databasePassword
     );
     server.run(hostname, port);
-}
-catch (e) {
+} catch (e) {
     console.error(e.name + ":", e.message);
 }

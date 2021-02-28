@@ -19,8 +19,7 @@ module.exports = class Server {
         try {
             let configData = fs.readFileSync('./config.json');
             this.config = JSON.parse(configData);
-        }
-        catch (e) {
+        } catch (e) {
             throw new Error("Failed to load config, " + e.message);
         }
 
@@ -70,13 +69,11 @@ module.exports = class Server {
 
     async handleGetTableRows(tableName, table, request, response) {
         try {
-            const result = await this.database.getRows(tableName, table);
-            const rows = result["rows"];
+            const ids = await this.database.getRows(tableName, table);
 
             response.status(200);
-            response.json(rows);
-        }
-        catch (e) {
+            response.json(ids);
+        } catch (e) {
             console.error(e.name + ":", e.message);
             response.status(500);
             response.send();
@@ -90,22 +87,18 @@ module.exports = class Server {
     }
 
     async handleGetTableRow(tableName, table, request, response) {
-        let {id} = request.params;
+        let { id } = request.params;
         try {
-            const result = await this.database.getRow(tableName, table, id);
+            const rows = await this.database.getRow(tableName, table, id);
 
-            if (result["rows"].length > 0) {
-                const rows = result["rows"];
-
+            if (rows.length > 0) {
                 response.status(200);
                 response.json(rows[0]);
-            }
-            else {
+            } else {
                 response.status(404);
                 response.send();
             }
-        }
-        catch (e) {
+        } catch (e) {
             console.error(e.name + ":", e.message);
             response.status(500);
             response.send();
@@ -113,7 +106,7 @@ module.exports = class Server {
     }
 
     async handlePutTableRow(tableName, table, request, response) {
-        let {id} = request.params;
+        let { id } = request.params;
 
         response.status(501);
         response.send();
@@ -122,7 +115,7 @@ module.exports = class Server {
     }
 
     async handleDeleteTableRow(tableName, table, request, response) {
-        let {id} = request.params;
+        let { id } = request.params;
 
         response.status(501);
         response.send();

@@ -18,53 +18,51 @@ module.exports = class Postgres extends Database {
         this.client.connect();
     }
 
-    getRows(tableName, table) {
+    async getRows(tableName, table) {
+        let query = "SELECT " + table["primaryKey"] + " FROM " + tableName;
+        const result = await this.client.query(query);
+
+        const primaryKey = table["primaryKey"];
+        const rows = result["rows"];
+        let ids = [];
+        for (const i in rows) {
+            const row = rows[i];
+            ids.push(row[primaryKey]);
+        }
+
+        return ids;
+    }
+
+    async getRow(tableName, table, id) {
         let query = "SELECT ";
         const fields = table["fields"];
+        const primaryKey = table["primaryKey"];
         let fieldCount = 0;
-        for (const field in fields)
-        {
+        for (const field in fields) {
+            if (field == primaryKey) continue;
             if (fieldCount++ != 0) query += ",";
             query += field;
         }
 
-        query += " FROM " + tableName;
+        query += " FROM " + tableName + " WHERE " + primaryKey + "=$1";
 
-        return this.client.query(query);
+        const result = await this.client.query(query, [id]);
+        return result["rows"];
     }
 
-    getRow(tableName, table, id) {
-        let query = "SELECT ";
-        const fields = table["fields"];
-        let fieldCount = 0;
-        for (const field in fields)
-        {
-            if (fieldCount++ != 0) query += ",";
-            query += field;
-        }
-
-        const primaryKey = table["primaryKey"];
-        const primaryKeyField = fields[primaryKey];
-
-        query += " FROM " + tableName + " WHERE " + table["primaryKey"] + "=$1";
-
-        return this.client.query(query, [id]);
-    }
-
-    insertRow(tableName, table, values) {
+    async insertRow(tableName, table, values) {
 
     }
 
-    updateRow(tableName, table, id, values) {
+    async updateRow(tableName, table, id, values) {
 
     }
 
-    deleteRow(tableName, table, id) {
+    async deleteRow(tableName, table, id) {
         const fields = table["fields"];
         const primaryKey = table["primaryKey"];
-        const primaryKeyField = fields[primaryKey];
 
-        query += "DELETE FROM " + tableName + " WHERE " + table["primaryKey"] + "=$1";
+        query += "DELETE FROM " + tableName + " WHERE " + primaryKey + "=$1";
 
         return this.client.query(query, [id]);
     }
