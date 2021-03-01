@@ -26,11 +26,11 @@ export function App() {
                 </nav>
 
                 <Switch>
-                    <Route path="/">
-                        <Home />
-                    </Route>
                     <Route path="/tables">
                         <Tables />
+                    </Route>
+                    <Route path="/">
+                        <Home />
                     </Route>
                 </Switch>
             </div>
