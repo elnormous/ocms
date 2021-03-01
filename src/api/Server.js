@@ -37,7 +37,7 @@ module.exports = class Server {
                 throw new Error("Unsupported database driver");
         }
 
-        this.server = express()
+        this.server = express();
 
         this.server.get("/api/config", this.handleGetConfig.bind(this));
 

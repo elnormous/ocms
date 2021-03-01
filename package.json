@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "run-p build:dev start:dev",
-    "start:dev": "DEBUG=* nodemon",
+    "start:dev": "NODE_ENV='development' DEBUG=* nodemon",
     "prestart:prod": "npm run build:prod",
-    "start:prod": "nodemon",
+    "start:prod": "NODE_ENV='production' nodemon",
     "build:dev": "webpack --watch --progress --mode development",
     "build:prod": "webpack --progress --mode production"
   },
