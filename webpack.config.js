@@ -17,7 +17,7 @@ module.exports = {
                 use: ["style-loader", "css-loader", "sass-loader"]
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 include: [
                     path.resolve(__dirname, "src", "app")
                 ],
