@@ -11,11 +11,16 @@ module.exports = {
         rules: [
             {
                 test: /\.scss$/,
+                include: [
+                    path.resolve(__dirname, "src", "app")
+                ],
                 use: ["style-loader", "css-loader", "sass-loader"]
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules/,
+                include: [
+                    path.resolve(__dirname, "src", "app")
+                ],
                 use: ["babel-loader"]
             }
         ]
