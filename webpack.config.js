@@ -24,5 +24,16 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "src", "app", "index.html")
         })
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 9000,
+        historyApiFallback: {
+            index: 'index.html'
+        },
+        proxy: {
+            '/api': 'http://localhost:8080',
+        }
+    }
 };

@@ -5,12 +5,13 @@
   "main": "src/api/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "run-p build:dev start:dev",
-    "start:dev": "NODE_ENV='development' DEBUG=* nodemon",
-    "prestart:prod": "npm run build:prod",
-    "start:prod": "NODE_ENV='production' nodemon",
-    "build:dev": "webpack --watch --progress --mode development",
-    "build:prod": "webpack --progress --mode production"
+    "start": "run-p serve dev",
+    "dev": "NODE_ENV='development' DEBUG=* nodemon",
+    "serve": "webpack serve --progress --mode development",
+
+    "preprod": "npm run build",
+    "prod": "NODE_ENV='production' nodemon",
+    "build": "webpack --progress --mode production"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,8 @@
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
     "webpack": "^5.23.0",
-    "webpack-cli": "^4.5.0"
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
     "express": "^4.17.1",
