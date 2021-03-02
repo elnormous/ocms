@@ -1,5 +1,6 @@
 import React from "react";
 import { Admin, Resource, List, Datagrid, TextField, EmailField } from 'react-admin';
+import { createBrowserHistory as createHistory } from 'history';
 import jsonServerProvider from 'ra-data-json-server';
 
 import "./App.scss"
@@ -19,12 +20,11 @@ const UserList = props => (
 );
 
 export function App() {
+    const history = createHistory();
     const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
     //const dataProvider = jsonServerProvider('/api');
 
-    return <div className="App">
-        <Admin dataProvider={dataProvider}>
+    return <Admin history={history} dataProvider={dataProvider}>
             <Resource name="users" list={UserList} />
-        </Admin>
-    </div>;
+        </Admin>;
 }
